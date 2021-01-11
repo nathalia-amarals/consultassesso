@@ -10,16 +10,16 @@ import java.math.BigInteger;
 public class Contrato {
 
     @Id
-    private BigInteger id;
+    private Long id;
     private Long idEmpresa;
     private BigDecimal valor;
     private String descricao;
 
-    public BigInteger getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigInteger id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

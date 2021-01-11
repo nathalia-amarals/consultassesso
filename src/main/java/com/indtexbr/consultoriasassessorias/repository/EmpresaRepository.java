@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 //@RepositoryRestResource(itemResourceRel = "empresa", path = "empresa")
 public interface EmpresaRepository extends MongoRepository<Empresa,Long> {
+    public Empresa findByRazaoSocial(String razaoSocial);
 }

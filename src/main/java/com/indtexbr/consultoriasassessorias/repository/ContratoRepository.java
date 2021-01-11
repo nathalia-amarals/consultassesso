@@ -10,5 +10,5 @@ import java.math.BigInteger;
 
 @Repository
 //@RepositoryRestResource(itemResourceRel = "contrato", path = "contrato")
-public interface ContratoRepository extends MongoRepository<Contrato, BigInteger> {
+public interface ContratoRepository extends MongoRepository<Contrato, Long> {
 }
