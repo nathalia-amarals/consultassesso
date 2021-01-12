@@ -1,6 +1,7 @@
 package com.indtexbr.consultoriasassessorias.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigInteger;
 public class Contrato {
 
     @Id
+    @GeneratedValue
     private Long id;
     private Long idEmpresa;
     private BigDecimal valor;
