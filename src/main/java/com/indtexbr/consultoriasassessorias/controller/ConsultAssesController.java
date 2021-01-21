@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +54,25 @@ public class ConsultAssesController {
 
     @PutMapping("contrato")
     public ResponseEntity<Contrato> atualizaContrato(@RequestBody Contrato contrato){
-        if(contrato.getId()!=null)
+
+
+        Optional<Contrato> contratoCadastrado = contratoRepository.findById(contrato.getId());
+
+        if(!contratoCadastrado.isEmpty())
         {
+            if(contrato.getDescricao() == null)
+            {
+                contrato.setDescricao(contratoCadastrado.get().getDescricao());
+            }
+            if(contrato.getIdEmpresa() == null)
+            {
+                contrato.setIdEmpresa(contratoCadastrado.get().getIdEmpresa());
+            }
+            if(contrato.getValor() == null)
+            {
+                contrato.setValor(contratoCadastrado.get().getValor());
+            }
+
             return new ResponseEntity<Contrato>(contratoRepository.save(contrato), HttpStatus.OK);
         }
 
@@ -86,9 +104,22 @@ public class ConsultAssesController {
 
     @PutMapping("empresa")
     public ResponseEntity atualizaEmpresa(@RequestBody Empresa empresa){
-        boolean empresaCadastrada = empresaRepository.findByRazaoSocial(empresa.getRazaoSocial()) != null ? true : false;
-        if(empresa != null && empresa.getId() != null && empresaCadastrada)
+        Empresa empresaCadastrada = empresaRepository.findByRazaoSocial(empresa.getRazaoSocial());
+        if(empresaCadastrada != null)
         {
+            if(empresa.getAreaDeAtuacao().equals(""))
+            {
+                empresa.setAreaDeAtuacao(empresaCadastrada.getAreaDeAtuacao());
+            }
+            if(empresa.getCNPJ().equals(""))
+            {
+                empresa.setCNPJ(empresaCadastrada.getCNPJ());
+            }
+            if(empresa.getId() == 0)
+            {
+                empresa.setId(empresaCadastrada.getId());
+            }
+
             empresaRepository.save(empresa);
             return new ResponseEntity(empresa.toString(),HttpStatus.CREATED);
         }
