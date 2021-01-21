@@ -104,20 +104,21 @@ public class ConsultAssesController {
 
     @PutMapping("empresa")
     public ResponseEntity atualizaEmpresa(@RequestBody Empresa empresa){
-        Empresa empresaCadastrada = empresaRepository.findByRazaoSocial(empresa.getRazaoSocial());
-        if(empresaCadastrada != null)
+        //Empresa empresaCadastrada = empresaRepository.findByRazaoSocial(empresa.getRazaoSocial());
+        Optional<Empresa> empresaCadastrada = empresaRepository.findById(empresa.getId());
+        if(!empresaCadastrada.isEmpty())
         {
             if(empresa.getAreaDeAtuacao().equals(""))
             {
-                empresa.setAreaDeAtuacao(empresaCadastrada.getAreaDeAtuacao());
+                empresa.setAreaDeAtuacao(empresaCadastrada.get().getAreaDeAtuacao());
             }
             if(empresa.getCNPJ().equals(""))
             {
-                empresa.setCNPJ(empresaCadastrada.getCNPJ());
+                empresa.setCNPJ(empresaCadastrada.get().getCNPJ());
             }
-            if(empresa.getId() == 0)
+            if(empresa.getRazaoSocial().equals(""))
             {
-                empresa.setId(empresaCadastrada.getId());
+                empresa.setRazaoSocial(empresaCadastrada.get().getRazaoSocial());
             }
 
             empresaRepository.save(empresa);
