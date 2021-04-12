@@ -1,22 +1,15 @@
 package com.indtexbr.consultoriasassessorias.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.indtexbr.consultoriasassessorias.entity.Contrato;
 import com.indtexbr.consultoriasassessorias.entity.Empresa;
 import com.indtexbr.consultoriasassessorias.repository.ContratoRepository;
-//import org.hibernate.criterion.Example;
 import com.indtexbr.consultoriasassessorias.repository.EmpresaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -58,7 +51,7 @@ public class ConsultAssesController {
 
         Optional<Contrato> contratoCadastrado = contratoRepository.findById(contrato.getId());
 
-        if(!contratoCadastrado.isEmpty())
+        if(!contratoCadastrado.isPresent())
         {
             if(contrato.getDescricao() == null)
             {
@@ -106,7 +99,7 @@ public class ConsultAssesController {
     public ResponseEntity atualizaEmpresa(@RequestBody Empresa empresa){
         //Empresa empresaCadastrada = empresaRepository.findByRazaoSocial(empresa.getRazaoSocial());
         Optional<Empresa> empresaCadastrada = empresaRepository.findById(empresa.getId());
-        if(!empresaCadastrada.isEmpty())
+        if(!empresaCadastrada.isPresent())
         {
             if(empresa.getAreaDeAtuacao().equals(""))
             {
